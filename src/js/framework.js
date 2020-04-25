@@ -10,3 +10,14 @@ const properties = {
   'm': 'margin',
   'p': 'padding'
 }
+
+/*/////////////////////////////
+         CSS FRAMEWORK
+            Reading     
+/////////////////////////////*/
+
+const elements = document.body.querySelectorAll('*')
+
+const getClassList = () => {
+  return [...elements].map(x => x = {name: x, classes: x.classList})
+}
