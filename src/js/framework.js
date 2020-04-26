@@ -44,4 +44,13 @@ const getOption        = item => getAllOptions()[Object.keys(getAllOptions()).fi
 
 let style = document.createElement('style')
 document.head.appendChild(style)
-style.innerHTML += '/*/////////////////////////////\n         CSS FRAMEWORK\n              CSS\n/////////////////////////////*/'
+style.innerHTML += '/*/////////////////////////////\n         CSS FRAMEWORK\n              CSS\n/////////////////////////////*/\n\n'
+
+/*/////////////////////////////
+         CSS FRAMEWORK
+            Classes
+/////////////////////////////*/
+
+const createClass = (className, property, value) => style.innerHTML += `.${className}{${property}:${value};}`
+
+createClass('test', 'color', 'white')
