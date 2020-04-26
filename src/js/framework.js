@@ -30,9 +30,18 @@ const config = {
             Reading     
 /////////////////////////////*/
 
-const elements = document.body.querySelectorAll('*')
+const elements         = document.body.querySelectorAll('*')
 
 const getClassList     = () => [...elements].map(x => x = {name: x, classes: [...x.classList].filter(y => y.startsWith(project_name))}).filter(x => x.classes.length > 0)
 const getItemByClass   = classes => getClassList().filter(x => x.classes.includes(classes))
 const getAllOptions    = () => config
 const getOption        = item => getAllOptions()[Object.keys(getAllOptions()).filter(x => x === item)]
+
+/*/////////////////////////////
+         CSS FRAMEWORK
+             Style
+/////////////////////////////*/
+
+let style = document.createElement('style')
+document.head.appendChild(style)
+style.innerHTML += '/*/////////////////////////////\n         CSS FRAMEWORK\n              CSS\n/////////////////////////////*/'
