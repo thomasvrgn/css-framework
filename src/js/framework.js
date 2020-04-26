@@ -29,4 +29,5 @@ const separator    = ':'
 
 const elements = document.body.querySelectorAll('*')
 
-const getClassList = () => [...elements].map(x => x = {name: x, classes: [...x.classList].filter(y => y.startsWith(project_name))}).filter(x => x.classes.length > 0)
+const getClassList     = () => [...elements].map(x => x = {name: x, classes: [...x.classList].filter(y => y.startsWith(project_name))}).filter(x => x.classes.length > 0)
+const getItemByClass   = classes => getClassList().filter(x => x.classes.includes(classes))
