@@ -57,5 +57,3 @@ style.innerHTML += '/*/////////////////////////////\n         CSS FRAMEWORK\n   
 /////////////////////////////*/
 
 const createClass = (className, property, value) => style.innerHTML += `.${className}{${property}:${value};}`
-
-createClass('test', 'color', 'white')
