@@ -56,4 +56,7 @@ style.innerHTML += '/*/////////////////////////////\n         CSS FRAMEWORK\n   
             Classes
 /////////////////////////////*/
 
-const createClass = (className, property, value) => style.innerHTML += `.${className}{${property}:${value};}`
+const createClass = (className, property, value) => style.innerHTML += `.${className}{${property}:${value};}\n`
+const getClass    = className => style.innerHTML.split(/\r?\n/).slice(4).filter(x => x !== '').filter(x => x.startsWith(`.${className}`))
+const getProperty = className => getClass(className)[0].slice(getClass(className)[0].indexOf('{') + 1).split(':')[0]
+const getValue    = className => getClass(className)[0].slice(getClass(className)[0].indexOf('{') + 1).split(':')[1].split(';}').join('')
