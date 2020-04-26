@@ -5,6 +5,11 @@
 
 const config = {
   properties: {},
+  unity: {
+    'pc': '%',
+    'px': 'px',
+    'rm': 'rem'
+  },
   breakpoints: {
     'xl': 1440,
     'lg': 1280,
