@@ -66,4 +66,4 @@ const getValue    = className => getClass(className)[0].slice(getClass(className
            Formating
 /////////////////////////////*/
 
-const format = () => getClassList().map(x => x.classes.map(y => y = {project_name: y.split(':')[0], property: y.split(':')[1].split('=')[0], value: y.split(':')[1].split('=')[1]}))
+const format = () => getClassList().map(x => x.classes.map(y => y = {project_name: y.split(':')[0] || null, property: y.split(':')[1].split('=')[0] || null, value: y.split(':')[1].split('=')[1] || null, event: y.split(':')[1].split('=')[0].match(/\((.*)\)/) !== null ? y.split(':')[1].split('=')[0].match(/\((.*)\)/)[0].split('(').join('').split(')').join('') : null}))
