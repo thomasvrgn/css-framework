@@ -30,6 +30,9 @@ const config = {
   },
   properties: {
     'bg-color': 'background-color'
+  },
+  global: {
+    'red'  : '#ff0055'
   }
 }
 
