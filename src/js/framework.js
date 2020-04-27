@@ -32,7 +32,7 @@ const config = {
     'bg-color': 'background-color'
   },
   global: {
-    'red'  : '#ff0055'
+    'red'  : '#ff6055'
   }
 }
 
@@ -114,11 +114,21 @@ format().forEach(classList => {
         }
         if (element.value !== null) {
           console.log('- Value:', element.value)
+          const global_options = getOption('global')
+          let value = element.value
+          let global = false
+          for (const i in global_options) {
+            if (element.value === i) {
+              console.log('> Global option:', i, global_options[i])
+              value = global_options[i]
+              global = true
+            }
+          }
           if (getOption(class_property)) {
             const property_options = getOption(class_property) 
-            let value = element.value
             for (const i in property_options) {
               if (element.value === i) {
+                if (global) console.log('* Option overrided:', i)
                 console.log('>', class_property + ':', i, property_options[i])
                 value = property_options[i]
               }
