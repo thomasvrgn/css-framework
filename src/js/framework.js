@@ -4,7 +4,6 @@
 /////////////////////////////*/
 
 const config = {
-  properties: {},
   unity: {
     'pc': '%',
     'px': 'px',
