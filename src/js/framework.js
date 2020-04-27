@@ -23,10 +23,10 @@ const config = {
   },
   separator: ':',
   project_name: 'ness',
-  colors: {
-    'black': '000000',
-    'white': 'ffffff',
-    'red'  : 'ff0055'
+  color: {
+    'black': '#000000',
+    'white': '#ffffff',
+    'red'  : '#ff0055'
   },
   properties: {
     'bg-color': 'background-color'
@@ -85,12 +85,12 @@ format().forEach(classList => {
         const events      = getOption('events')
         for (const i in breakpoints) {
           if (element.event === i) {
-            console.log('Breakpoint:', breakpoints[i] + 'px')
+            console.log('- Breakpoint:', breakpoints[i] + 'px')
           }
         }
         for (const i in events) {
           if (element.event === i) {
-            console.log('Event:', events[i])
+            console.log('- Event:', events[i])
           }
         }
       }
@@ -109,7 +109,19 @@ format().forEach(classList => {
             class_property = properties[i]
           }
         }
-        console.log('Property:', class_property)
+        if (element.value !== null) {
+          console.log('- Value:', element.value)
+          if (getOption(class_property)) {
+            const property_options = getOption(class_property) 
+            let value = element.value
+            for (const i in property_options) {
+              if (element.value === i) {
+                console.log('>', class_property + ':', i, property_options[i])
+                value = property_options[i]
+              }
+            }
+          }
+        }
       }
     }
   })
