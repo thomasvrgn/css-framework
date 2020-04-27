@@ -128,7 +128,10 @@ format().forEach(classList => {
             const property_options = getOption(class_property) 
             for (const i in property_options) {
               if (element.value === i) {
-                if (global) console.log('* Option overrided:', i)
+                if (global) {
+                  global = false
+                  console.log('* Option overrided:', i)
+                }
                 console.log('>', class_property + ':', i, property_options[i])
                 value = property_options[i]
               }
