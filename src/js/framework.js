@@ -81,6 +81,14 @@ format().forEach(classList => {
   classList.forEach(element => {
     let valueElements = []
     let classElement = []
+    let valueUnity = element.value
+    if (getOption('unity')) {
+      const unities = getOption('unity')
+      for (const i in unities) {
+        valueUnity = valueUnity.replace(i, unities[i])
+      }
+    }
+    console.log(valueUnity)
     if (element.project_name === getOption('project_name')) {
       if (element.event !== null) {
         const breakpoints = getOption('breakpoints')
@@ -117,7 +125,7 @@ format().forEach(classList => {
         classElement.push(class_property)
         if (element.value !== null) {
           const global_options = getOption('global')
-          let value = element.value
+          let value = valueUnity
           let global = false
           for (const i in global_options) {
             if (element.value === i) {
