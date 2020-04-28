@@ -70,7 +70,7 @@ const getValue    = className => getClass(className)[0].slice(getClass(className
            Formating
 /////////////////////////////*/
 
-const format = () => getClassList().map(x => x.classes.map(y => y = {project_name: y.split(':')[0] || null, property: y.split(':')[1].split('=')[0].split(/\((.*)\)/g).pop() || null, value: y.split(':')[1].split('=')[1] || null, event: y.split(':')[1].split('=')[0].match(/\((.*)\)/) !== null ? y.split(':')[1].split('=')[0].match(/\((.*)\)/)[0].split('(').join('').split(')').join('') : null}))
+const format = () => getClassList().map(x => x.classes.map(y => y = {project_name: y.split(':')[0] || null, property: y.split(':')[1].split('=')[0].split(/\((.*)\)/g).pop() || null, value: y.split(':')[1].split('=')[1] || null, event: y.split(':')[1].split('=')[0].match(/\((.*)\)/) !== null ? y.split(':')[1].split('=')[0].match(/\((.*)\)/)[0].split('(').join(' ').split(')').join('').trim() : null}))
 
 /*/////////////////////////////
          CSS FRAMEWORK
@@ -79,9 +79,11 @@ const format = () => getClassList().map(x => x.classes.map(y => y = {project_nam
 
 format().forEach(classList => {
   classList.forEach(element => {
-    let valueElements = []
-    let classElement = []
+    let valueElements = '%media% %class%%event% { %property%:%value%; } %media end%'
     let valueUnity = element.value
+    if (element.event) {
+      element.event = element.event.split(' ')
+    }
     if (getOption('unity')) {
       const unities = getOption('unity')
       for (const i in unities) {
@@ -93,19 +95,32 @@ format().forEach(classList => {
       if (element.event !== null) {
         const breakpoints = getOption('breakpoints')
         const events      = getOption('events')
-        for (const i in breakpoints) {
-          if (element.event === i) {
-            valueElements.push(`@media screen and (max-width: ${breakpoints[i]}px) { .${element.project_name}\\:\\(${element.event}\\)${element.property}\\=${element.value} {`, '', '} }')
+        for (const u in element.event) {
+          for (const i in breakpoints) {
+            if (element.event[u] === i) {
+              valueElements = valueElements.replace('%media%', `@media screen and (max-width: ${breakpoints[i]}px) {`)
+              valueElements = valueElements.replace('%media end%', '}')
+            }
           }
-        }
-        for (const i in events) {
-          if (element.event === i) {
-            valueElements.push(`.${element.project_name}\\:\\(${element.event}\\)${element.property}\\=${element.value}:${events[i]} {`, '', '}')
+          for (const i in events) {
+            if (element.event[u] === i) {
+              valueElements = valueElements.replace('%event%', ':' + events[i])
+            }
           }
         }
       } else {
-        valueElements.push(`.${element.project_name}\\:${element.property}\\=${element.value} {`, '', '}')
+        valueElements = valueElements.replace('%media%', '')
+        valueElements = valueElements.replace('%event%', '')
+        valueElements = valueElements.replace('%media end%', '')
       }
+      if (valueElements.includes('%media%')) {
+        valueElements = valueElements.replace('%media%', '')
+        valueElements = valueElements.replace('%media end%', '')
+      }
+      if (valueElements.includes('%event%')) {
+        valueElements = valueElements.replace('%event%', '') 
+      }
+      valueElements = valueElements.replace('%class%', `.${element.project_name}\\:${element.event.map(x => x = '\\(' + x + '\\)').join('')}${element.property}\\=${element.value}`)
 
       if (element.property !== null) {
         const properties        = getOption('properties')
@@ -122,7 +137,8 @@ format().forEach(classList => {
             class_property = properties[i]
           }
         }
-        classElement.push(class_property)
+        valueElements = valueElements.replace('%property%', class_property)
+        valueElements = valueElements.replace('%media end%', '}')
         if (element.value !== null) {
           const global_options = getOption('global')
           let value = valueUnity
@@ -144,12 +160,10 @@ format().forEach(classList => {
               }
             }
           }
-          if (valueElements[1] !== undefined) {
-            valueElements[1] = `${classElement[0]}:${value};`
-          }
-          createClass(valueElements.join(''))
+          valueElements = valueElements.replace('%value%', value)
         }
       }
+      createClass(valueElements.trim())
     }
   })
 })
