@@ -79,7 +79,7 @@ const format = () => getClassList().map(x => x.classes.map(y => y = {project_nam
 
 format().forEach(classList => {
   classList.forEach(element => {
-    let valueElements = '%media% %class%%event% { %property%:%value%; } %media end%'
+    let valueElements = '%media%%class%%event%{%property%:%value%;}%media end%'
     let valueUnity = element.value
     if (element.event) {
       element.event = element.event.split(' ')
@@ -98,7 +98,7 @@ format().forEach(classList => {
         for (const u in element.event) {
           for (const i in breakpoints) {
             if (element.event[u] === i) {
-              valueElements = valueElements.replace('%media%', `@media screen and (max-width: ${breakpoints[i]}px) {`)
+              valueElements = valueElements.replace('%media%', `@media screen and (max-width:${breakpoints[i]}px){`)
               valueElements = valueElements.replace('%media end%', '}')
             }
           }
@@ -108,10 +108,6 @@ format().forEach(classList => {
             }
           }
         }
-      } else {
-        valueElements = valueElements.replace('%media%', '')
-        valueElements = valueElements.replace('%event%', '')
-        valueElements = valueElements.replace('%media end%', '')
       }
       if (valueElements.includes('%media%')) {
         valueElements = valueElements.replace('%media%', '')
@@ -160,7 +156,11 @@ format().forEach(classList => {
               }
             }
           }
-          valueElements = valueElements.replace('%value%', value)
+          if (valueElements.includes('@media')) {
+            valueElements = valueElements.replace('%value%', value + ' !important')
+          } else {
+            valueElements = valueElements.replace('%value%', value)
+          }
         }
       }
       createClass(valueElements.trim())
