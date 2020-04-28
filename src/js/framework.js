@@ -20,7 +20,6 @@ const config = {
     'hv': 'hover',
     'fc': 'focus'
   },
-  separator: ':',
   project_name: 'ness',
   color: {
     'black': '#000000',
