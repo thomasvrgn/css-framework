@@ -61,7 +61,7 @@ style.innerHTML += '/*/////////////////////////////\n         CSS FRAMEWORK\n   
             Classes
 /////////////////////////////*/
 
-const createClass = (className, property, value) => style.innerHTML += `.${className}{${property}:${value};}\n`
+const createClass = (css) => style.innerHTML += `${css}\n`
 const getClass    = className => style.innerHTML.split(/\r?\n/).slice(4).filter(x => x !== '').filter(x => x.startsWith(`.${className}`))
 const getProperty = className => getClass(className)[0].slice(getClass(className)[0].indexOf('{') + 1).split(':')[0]
 const getValue    = className => getClass(className)[0].slice(getClass(className)[0].indexOf('{') + 1).split(':')[1].split(';}').join('')
@@ -80,22 +80,26 @@ const format = () => getClassList().map(x => x.classes.map(y => y = {project_nam
 
 format().forEach(classList => {
   classList.forEach(element => {
-    const finalClass = []
+    let valueElements = []
+    let classElement = []
     if (element.project_name === getOption('project_name')) {
       if (element.event !== null) {
         const breakpoints = getOption('breakpoints')
         const events      = getOption('events')
         for (const i in breakpoints) {
           if (element.event === i) {
-            console.log('- Breakpoint:', breakpoints[i] + 'px')
+            valueElements.push(`@media screen and (max-width: ${breakpoints[i]}px) { .${element.project_name}\\:\\(${element.event}\\)${element.property}\\=${element.value} {`, '', '} }')
           }
         }
         for (const i in events) {
           if (element.event === i) {
-            console.log('- Event:', events[i])
+            valueElements.push(`.${element.project_name}\\:\\(${element.event}\\)${element.property}\\=${element.value}:${events[i]} {`, '', '}')
           }
         }
+      } else {
+        valueElements.push(`.${element.project_name}\\:${element.property}\\=${element.value} {`, '', '}')
       }
+
       if (element.property !== null) {
         const properties        = getOption('properties')
         const properties_length = Object.keys(properties).length
@@ -111,14 +115,13 @@ format().forEach(classList => {
             class_property = properties[i]
           }
         }
+        classElement.push(class_property)
         if (element.value !== null) {
-          console.log('- Value:', element.value)
           const global_options = getOption('global')
           let value = element.value
           let global = false
           for (const i in global_options) {
             if (element.value === i) {
-              console.log('> Global option:', i, global_options[i])
               value = global_options[i]
               global = true
             }
@@ -129,13 +132,15 @@ format().forEach(classList => {
               if (element.value === i) {
                 if (global) {
                   global = false
-                  console.log('* Option overrided:', i)
                 }
-                console.log('>', class_property + ':', i, property_options[i])
                 value = property_options[i]
               }
             }
           }
+          if (valueElements[1] !== undefined) {
+            valueElements[1] = `${classElement[0]}:${value};`
+          }
+          createClass(valueElements.join(''))
         }
       }
     }
