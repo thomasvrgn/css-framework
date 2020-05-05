@@ -77,6 +77,7 @@ const format = () => getClassList().map(x => x.classes.map(y => y = {project_nam
             Parsing
 /////////////////////////////*/
 
+console.log(format())
 format().forEach(classList => {
   classList.forEach(element => {
     let valueElements = '%media%%class%%event%{%property%:%value%;}%media end%'
@@ -116,7 +117,7 @@ format().forEach(classList => {
       if (valueElements.includes('%event%')) {
         valueElements = valueElements.replace('%event%', '') 
       }
-      valueElements = valueElements.replace('%class%', `.${element.project_name}\\:${element.event.map(x => x = '\\(' + x + '\\)').join('')}${element.property}\\=${element.value}`)
+      valueElements = valueElements.replace('%class%', `.${element.project_name}\\:${element.event !== null ? element.event.map(x => x = '\\(' + x + '\\)').join('') : ''}${element.property}\\=${element.value}`)
 
       if (element.property !== null) {
         const properties        = getOption('properties')
