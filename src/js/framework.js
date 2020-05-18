@@ -9,16 +9,14 @@ const config = {
     'px': 'px',
     'rm': 'rem'
   },
-  breakpoints: {
+  events: {
+    'hv': 'hover',
+    'fc': 'focus',
     'xl': 1440,
     'lg': 1280,
     'md': 960,
     'sm': 768,
     'xs': 480 
-  },
-  events: {
-    'hv': 'hover',
-    'fc': 'focus'
   },
   project_name: 'ness',
   color: {
@@ -84,7 +82,9 @@ format().forEach(classList  => {
     let valueElements = '%media%%class%%event%{%property%:%value%;}%media end%',
         property      = element.property,
         value         = element.value,
-        event         = element.event
+        event         = element.event,
+        media         = '',
+        effect        = ''
 
     for (const param in getAllOptions()) {
       if (property === param) {
@@ -103,8 +103,20 @@ format().forEach(classList  => {
         }
       }
     }
+
+    if (event) {
+      if (getOption('events')) {
+        for (const param in getOption('events')) {
+          for (const item of event) {
+            if (item === param) {
+              if (!isNaN(getOption('events')[param])) media = `@media(max-width:${getOption('events')[param]}px){`
+              else effect = `:${getOption('events')[param]}`
+            }
+          }
+        }
+      }
+    }
     
-    console.log(property, value, event)
 
   })
 })
