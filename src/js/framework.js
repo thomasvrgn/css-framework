@@ -118,6 +118,16 @@ format().forEach(classList  => {
       }
     }
 
+    if (value) {
+      if (getOption('unity')) {
+        for (const unity in getOption('unity')) {
+          if (value.endsWith(unity)) {
+            value = value.slice(0, value.length - unity.length) + getOption('unity')[unity]
+          }
+        }
+      }
+    }
+
     if (media) valueElements    = valueElements.replace('%media%', media).replace('%media end%', '}')
     else valueElements          = valueElements.replace(/(%media%|%media end%)/g, '')
 
