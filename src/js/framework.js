@@ -78,12 +78,12 @@ const format = () => getClassList().map(x => x.classes.map(y => y = {project_nam
 format().forEach(classList  => {
   classList.forEach(element => {
     if (element.project_name !== config.project_name) return
-    console.log(element)
+
     let valueElements = '%media%%class%%event%{%property%:%value%;}%media end%',
         property      = element.property,
         value         = element.value,
         event         = element.event,
-        full          = element.full.replace(/\(/g, '\\(').replace(/\)/g, '\\)').replace(/\=/g, '\\=').replace(/\:/g, '\\:'),
+        full          = '.' + element.full.replace(/\(/g, '\\(').replace(/\)/g, '\\)').replace(/\=/g, '\\=').replace(/\:/g, '\\:'),
         media         = undefined,
         effect        = undefined
 
@@ -118,13 +118,17 @@ format().forEach(classList  => {
       }
     }
 
-    if (media) valueElements = valueElements.replace('%media%', media).replace('%media end%', '}')
-    else valueElements = valueElements.replace(/(%media%|%media end%)/g, '')
+    if (media) valueElements    = valueElements.replace('%media%', media).replace('%media end%', '}')
+    else valueElements          = valueElements.replace(/(%media%|%media end%)/g, '')
 
-    if (effect) valueElements = valueElements.replace('%event%', effect)
-    else valueElements = valueElements.replace(/(%event%)/g, '')
+    if (effect) valueElements   = valueElements.replace('%event%', effect)
+    else valueElements          = valueElements.replace(/(%event%)/g, '')
 
-    console.log(full)
+    if (full) valueElements     = valueElements.replace('%class%', full)
+
+    if (property) valueElements = valueElements.replace('%property%', property)
+
+    if (value) valueElements    = valueElements.replace('%value%', value)
 
     console.log(valueElements)
     
