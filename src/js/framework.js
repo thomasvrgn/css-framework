@@ -86,5 +86,17 @@ format().forEach(classList  => {
         value         = element.value,
         event         = element.event
 
+    for (const param in getAllOptions()) {
+      if (property === param) {
+        for (const item in getOption(param)) {
+          if (item === value) {
+            value = getOption(param)[item]
+          }
+        }
+      }
+    }
+
+    console.log(property, value, event)
+
   })
 })
