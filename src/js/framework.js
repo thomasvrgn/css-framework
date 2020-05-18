@@ -81,8 +81,9 @@ format().forEach(classList => {
   classList.forEach(element => {
     if (element.project_name !== config.project_name) return
 
-    let valueElements = '%media%%class%%event%{%property%:%value%;}%media end%'
+    let valueElements = '%media%%class%%event%{%property%:%value%;}%media end%',
+        property      = element.property,
+        value         = element.value
 
-    console.log(element)
   })
 })
