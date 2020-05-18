@@ -83,8 +83,8 @@ format().forEach(classList  => {
         property      = element.property,
         value         = element.value,
         event         = element.event,
-        media         = '',
-        effect        = ''
+        media         = undefined,
+        effect        = undefined
 
     for (const param in getAllOptions()) {
       if (property === param) {
@@ -116,6 +116,14 @@ format().forEach(classList  => {
         }
       }
     }
+
+    if (media) valueElements = valueElements.replace('%media%', media).replace('%media end%', '}')
+    else valueElements = valueElements.replace(/(%media%|%media end%)/g, '')
+
+    if (effect) valueElements = valueElements.replace('%event%', effect)
+    else valueElements = valueElements.replace(/(%event%)/g, '')
+
+    console.log(valueElements)
     
 
   })
