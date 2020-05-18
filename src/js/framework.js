@@ -130,7 +130,7 @@ format().forEach(classList  => {
 
     if (value) valueElements    = valueElements.replace('%value%', value)
 
-    console.log(valueElements)
+    createClass(valueElements)
     
 
   })
