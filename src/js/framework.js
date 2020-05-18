@@ -70,16 +70,19 @@ const getValue    = className => getClass(className)[0].slice(getClass(className
            Formating
 /////////////////////////////*/
 
-const format = () => getClassList().map(x => x.classes.map(y => y = {project_name: y.split(':')[0] || null, property: y.split(':')[1].split('=')[0].split(/\((.*)\)/g).pop() || null, value: y.split(':')[1].split('=')[1] || null, event: y.split(':')[1].split('=')[0].match(/\((.*)\)/) !== null ? y.split(':')[1].split('=')[0].match(/\((.*)\)/)[0].split('(').join(' ').split(')').join('').trim() : null}))
+const format = () => getClassList().map(x => x.classes.map(y => y = {project_name: y.split(':')[0] || null, property: y.split(':')[1].split('=')[0].split(/\((.*)\)/g).pop() || null, value: y.split(':')[1].split('=')[1] || null, event: y.split(':')[1].split('=')[0].match(/\((.*)\)/) !== null ? y.split(':')[1].split('=')[0].match(/\((.*)\)/)[0].split('(').join(' ').split(')').filter(x => x !== '').map(x => x.trim()) : null}))
 
 /*/////////////////////////////
          CSS FRAMEWORK
             Parsing
 /////////////////////////////*/
 
-console.log(format())
 format().forEach(classList => {
   classList.forEach(element => {
+    if (element.project_name !== config.project_name) return
+
     let valueElements = '%media%%class%%event%{%property%:%value%;}%media end%'
+
+    console.log(element)
   })
 })
