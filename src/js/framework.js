@@ -96,6 +96,14 @@ format().forEach(classList  => {
         }
       }
     }
+    
+    if (getOption('global')) {
+      for (const item in getOption('global')) {
+        if (value === item) {
+          value = getOption('global')[item]
+        }
+      }
+    }
 
     if (getOption('properties')) {
       for (const param in getOption('properties')) {
@@ -128,6 +136,8 @@ format().forEach(classList  => {
       }
     }
 
+    if (media) value = value + '!important'
+
     if (media) valueElements    = valueElements.replace('%media%', media).replace('%media end%', '}')
     else valueElements          = valueElements.replace(/(%media%|%media end%)/g, '')
 
@@ -139,6 +149,7 @@ format().forEach(classList  => {
     if (property) valueElements = valueElements.replace('%property%', property)
 
     if (value) valueElements    = valueElements.replace('%value%', value)
+
 
     createClass(valueElements)
     
