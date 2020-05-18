@@ -41,10 +41,10 @@ const config = {
 
 const elements         = document.body.querySelectorAll('*')
 
-const getClassList     = () => [...elements].map(x => x = {name: x, classes: [...x.classList].filter(y => y.startsWith(config.project_name))}).filter(x => x.classes.length > 0)
+const getClassList     = ()      => [...elements].map(x => x = {name: x, classes: [...x.classList].filter(y => y.startsWith(config.project_name))}).filter(x => x.classes.length > 0)
 const getItemByClass   = classes => getClassList().filter(x => x.classes.includes(classes))
-const getAllOptions    = () => config
-const getOption        = item => getAllOptions()[Object.keys(getAllOptions()).filter(x => x === item)]
+const getAllOptions    = ()      => config
+const getOption        = item    => getAllOptions()[Object.keys(getAllOptions()).filter(x => x === item)]
 
 /*/////////////////////////////
          CSS FRAMEWORK
@@ -60,7 +60,7 @@ style.innerHTML += '/*/////////////////////////////\n         CSS FRAMEWORK\n   
             Classes
 /////////////////////////////*/
 
-const createClass = (css) => style.innerHTML += `${css}\n`
+const createClass = (css)     => style.innerHTML += `${css}\n`
 const getClass    = className => style.innerHTML.split(/\r?\n/).slice(4).filter(x => x !== '').filter(x => x.startsWith(`.${className}`))
 const getProperty = className => getClass(className)[0].slice(getClass(className)[0].indexOf('{') + 1).split(':')[0]
 const getValue    = className => getClass(className)[0].slice(getClass(className)[0].indexOf('{') + 1).split(':')[1].split(';}').join('')
@@ -77,13 +77,14 @@ const format = () => getClassList().map(x => x.classes.map(y => y = {project_nam
             Parsing
 /////////////////////////////*/
 
-format().forEach(classList => {
+format().forEach(classList  => {
   classList.forEach(element => {
     if (element.project_name !== config.project_name) return
 
     let valueElements = '%media%%class%%event%{%property%:%value%;}%media end%',
         property      = element.property,
-        value         = element.value
+        value         = element.value,
+        event         = element.event
 
   })
 })
