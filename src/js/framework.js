@@ -83,6 +83,7 @@ format().forEach(classList  => {
         property      = element.property,
         value         = element.value,
         event         = element.event,
+        full          = element.full.replace(/\(/g, '\\(').replace(/\)/g, '\\)').replace(/\=/g, '\\=').replace(/\:/g, '\\:'),
         media         = undefined,
         effect        = undefined
 
@@ -122,6 +123,8 @@ format().forEach(classList  => {
 
     if (effect) valueElements = valueElements.replace('%event%', effect)
     else valueElements = valueElements.replace(/(%event%)/g, '')
+
+    console.log(full)
 
     console.log(valueElements)
     
