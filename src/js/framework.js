@@ -54,7 +54,10 @@ class Class {
   }
 
   static setAttribute (element = document.body.querySelectorAll('*')) {
-    [...element].map(x => x.setAttribute('fw-' + ([...Array.from(x.classList).join('')].map(x => x.charCodeAt()).reduce((acc, cur) => acc + cur)<< 19 ).toString(36), ''))
+    [...element].map(x => x.setAttribute('fw-' + ([...Array.from(x.classList)
+                                                           .join('')].map(x => x.charCodeAt())
+                                                                                .reduce((acc, cur) => acc + cur)<< 19 )
+                                                                                .toString(36), ''))
   }
 
   static createClass (content = '.error{color: red;}') {
@@ -68,6 +71,8 @@ class VM extends Class {
   static async render (element) {
 
     this.setAttribute(element)
+
+
     console.log(this.getClassList(element))
 
   }
