@@ -63,7 +63,7 @@ class Class {
 
 }
 
-class VM extends Class{
+class VM extends Class {
 
   static async render (element) {
 
