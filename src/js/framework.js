@@ -68,12 +68,13 @@ class Class {
 
 class VM extends Class {
 
+
   static async render (element) {
+    this.setAttribute(element.root.querySelectorAll('*'))
 
-    this.setAttribute(element)
-
-
-    console.log(this.getClassList(element))
+    for (const CSSclass of this.getClassList(element.root.querySelectorAll('*'))) {
+      if (CSSclass.split(':')[0] !== element.project_name) continue
+    }
 
   }
 
@@ -91,7 +92,7 @@ class Framework extends VM {
     root         : document.body
   }) {
 
-    this.render(options.root.querySelectorAll('*'))
+    this.render(options)
 
   }
 
