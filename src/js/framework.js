@@ -29,16 +29,27 @@ const config = {
   },
   global: {
     'red'  : '#ff6055'
-  }
+  },
+  root: document.body
 }
 
 class Class {
 
-  static element = {}
+  static classList = []
 
-  static getAllElements (root = document.body) {
+  static getAllElements (root = document.body.querySelectorAll('*')) {
     
-    return root.querySelectorAll('*')
+    return root
+
+  }
+
+  static getClassList (root = document.body.querySelectorAll('*')) {
+
+    for (const element of this.getAllElements(root)) {
+      this.classList.push(Array.from(element.classList))
+    }
+
+    return Array.from(new Set(this.classList.flat()))
 
   }
 
@@ -56,7 +67,8 @@ class VM extends Class{
 
   static async render (element) {
 
-    this.setAttribute()
+    this.setAttribute(element)
+    console.log(this.getClassList(element))
 
   }
 
@@ -65,15 +77,16 @@ class VM extends Class{
 class Framework extends VM {
 
   static init (options = {
-    unity: Object,
-    events: Object,
-    project_name: String,
-    color: Object,
-    properties: Object,
-    global: Object
+    unity        : Object ,
+    events       : Object ,
+    project_name : String ,
+    color        : Object ,
+    properties   : Object ,
+    global       : Object ,
+    root         : document.body
   }) {
 
-    this.render()
+    this.render(options.root.querySelectorAll('*'))
 
   }
 
