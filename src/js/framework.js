@@ -74,6 +74,14 @@ class VM extends Class {
 
     for (const CSSclass of this.getClassList(element.root.querySelectorAll('*'))) {
       if (CSSclass.split(':')[0] !== element.project_name) continue
+
+      const content  = CSSclass.split(':').slice(1).join(':'),
+            events   = content.match(/\(.*?\)/g) ?? [],
+            elements = content.replace(/\(.*?\)/g, '').split('='),
+            property = elements[0],
+            value    = elements[1]
+      
+      console.log(events, property, value)
     }
 
   }
