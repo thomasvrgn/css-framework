@@ -15,7 +15,7 @@ import('./components/' + property + '.js')
     content.default.exec({
       property: property,
       value: value,
-      modifier: modifier
+      modifier: parseInt(modifier)
     })
   })
   .catch(function (error) {
